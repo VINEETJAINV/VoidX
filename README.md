@@ -1,3 +1,25 @@
+# VOIDX — Social Media Platform
+
+## Features
+- Secure login/signup (Clerk)
+- User profiles (name, avatar, bio)
+- Create posts (text, optional image)
+- Global feed
+- Like (clap) system
+- Responsive, modern UI (Tailwind)
+- Deployed on Vercel
+
+## Setup
+1. Clone repo, install deps
+2. Add `.env.local` with Clerk and Supabase keys
+3. Run `npm run dev`
+
+## Tech Stack
+- Next.js, Clerk, Supabase, Tailwind
+
+## Known Issues
+- [List any, e.g. "Profile avatar upload is optional, defaults to Clerk avatar"]
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
 ## Getting Started
