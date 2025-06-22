@@ -3,6 +3,8 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import DarkModeToggle from "../components/DarkmodeToggle";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Profile() {
   const { user } = useUser();
@@ -66,7 +68,7 @@ export default function Profile() {
         setPosts(userPosts);
         setClaps(userPosts.reduce((sum, post) => sum + (post.total_likes || 0), 0));
       });
-  }, [user]);
+  }, [user, getAvatar]);
 
   // Save profile
   const handleSave = async () => {
@@ -139,10 +141,13 @@ export default function Profile() {
             Back
           </button>
           <div className="relative mb-6 mt-2">
-            <img
+            <Image
               src={getAvatar()}
               alt="avatar"
+              width={128}
+              height={128}
               className="w-32 h-32 rounded-full object-cover border-4 border-indigo-300 dark:border-indigo-700 shadow-lg transition-all duration-300"
+              unoptimized
             />
             {edit && (
               <>
@@ -224,13 +229,13 @@ export default function Profile() {
           <div className="w-full mt-8">
             <h3 className="text-lg font-semibold text-gray-800 mb-2">Your Posts</h3>
             {posts.length === 0 ? (
-              <div className="text-gray-400 text-center">You haven't posted anything yet.</div>
+              <div className="text-gray-400 text-center">You haven&apos;t posted anything yet.</div>
             ) : (
               <div className="flex flex-col gap-4">
                 {posts.map((post) => (
                   <div key={post.id} className="bg-indigo-50 rounded-xl p-4 shadow">
                     {post.image_url && (
-                      <img src={post.image_url} alt="" className="w-full rounded mb-2 max-h-40 object-cover" />
+                      <Image src={post.image_url} alt="" width={400} height={160} className="w-full rounded mb-2 max-h-40 object-cover" unoptimized />
                     )}
                     <div className="text-gray-800">{post.content}</div>
                     <div className="text-xs text-gray-500 mt-1">{new Date(post.created_at).toLocaleString()}</div>

@@ -4,6 +4,7 @@ import axios from "axios";
 import { Toaster } from "react-hot-toast";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
+import Image from "next/image";
 
 export default function CreatePost({ userId, onPost, userName, userAvatar }) {
   const [content, setContent] = useState("");
@@ -93,7 +94,7 @@ export default function CreatePost({ userId, onPost, userName, userAvatar }) {
         <div className="text-indigo-600 dark:text-indigo-300 font-semibold mb-2">Uploading image...</div>
       )}
       {imageUrl && (
-        <img src={imageUrl} alt="preview" className="w-full max-h-48 object-cover rounded-xl mb-2 shadow border border-indigo-100 dark:border-indigo-700" />
+        <Image src={imageUrl} alt="preview" width={400} height={192} className="w-full max-h-48 object-cover rounded-xl mb-2 shadow border border-indigo-100 dark:border-indigo-700" unoptimized />
       )}
       <button
         type="submit"

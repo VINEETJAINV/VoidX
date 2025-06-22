@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -16,18 +17,24 @@ export default function PostCard({ post, onLike }) {
       whileHover={{ scale: 1.02 }}
     >
       <div className="flex items-center gap-3 mb-2">
-        <img
+        <Image
           src={post.user_avatar}
           alt=""
+          width={36}
+          height={36}
           className="w-9 h-9 rounded-full object-cover border-2 border-indigo-200 dark:border-indigo-700 shadow"
+          unoptimized
         />
         <span className="font-semibold text-indigo-700 dark:text-indigo-400">{post.user_name}</span>
       </div>
       {post.image_url && (
-        <img
+        <Image
           src={post.image_url}
           alt=""
+          width={400}
+          height={240}
           className="rounded-xl mb-2 max-h-60 object-cover w-full shadow-lg border border-indigo-100 dark:border-indigo-700"
+          unoptimized
         />
       )}
       <div className="mb-2 text-gray-800 dark:text-gray-200 text-lg font-medium">{post.content}</div>
