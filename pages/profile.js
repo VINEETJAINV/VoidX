@@ -1,5 +1,5 @@
 import { useUser } from "@clerk/nextjs";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import DarkModeToggle from "../components/DarkmodeToggle";
@@ -22,12 +22,12 @@ export default function Profile() {
   const [claps, setClaps] = useState(0);
 
   // Helper for avatar
-  const getAvatar = () => {
+  const getAvatar = useCallback(() => {
     if (avatarUrl) return avatarUrl;
     if (user?.imageUrl) return user.imageUrl;
     if (profile.avatar_url) return profile.avatar_url;
     return `https://ui-avatars.com/api/?name=${encodeURIComponent(name || user?.fullName || "User")}`;
-  };
+  }, [avatarUrl, user, profile.avatar_url, name]);
 
   // Fetch profile and posts
   useEffect(() => {
