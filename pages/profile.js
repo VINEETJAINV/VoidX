@@ -44,20 +44,27 @@ export default function Profile() {
         setAvatarUrl(p.avatar_url || "");
         setLoading(false);
       })
-      .catch(async () => {
+      .catch(async (error) => {
+        console.error('Error fetching profile:', error);
         const avatar_url = getAvatar();
-        await axios.post("/api/profile/update", {
-          id: user.id,
-          name: user.fullName,
-          bio: "",
-          avatar_url
-        });
-        setProfile({ name: user.fullName, bio: "", avatar_url, id: user.id });
-        setName(user.fullName);
-        setBio("");
-        setUid(user.id);
-        setAvatarUrl(avatar_url);
-        setLoading(false);
+        try {
+          await axios.post("/api/profile/update", {
+            id: user.id,
+            name: user.fullName,
+            bio: "",
+            avatar_url
+          });
+          setProfile({ name: user.fullName, bio: "", avatar_url, id: user.id });
+          setName(user.fullName);
+          setBio("");
+          setUid(user.id);
+          setAvatarUrl(avatar_url);
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          console.error('Error creating initial profile:', error);
+          alert('Failed to create initial profile: ' + (error.response?.data?.error || error.message));
+        }
       });
 
     // Fetch user's posts and claps
@@ -74,15 +81,21 @@ export default function Profile() {
   const handleSave = async () => {
     setLoading(true);
     const avatar_url = avatarUrl || getAvatar();
-    await axios.post("/api/profile/update", {
-      id: uid,
-      name,
-      bio,
-      avatar_url
-    });
-    setProfile({ ...profile, name, bio, avatar_url, id: uid });
-    setEdit(false);
-    setLoading(false);
+    try {
+      await axios.post("/api/profile/update", {
+        id: uid,
+        name,
+        bio,
+        avatar_url
+      });
+      setProfile({ ...profile, name, bio, avatar_url, id: uid });
+      setEdit(false);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.error('Error updating profile:', error);
+      alert('Failed to update profile: ' + (error.response?.data?.error || error.message));
+    }
   };
 
   // Avatar upload

@@ -27,18 +27,24 @@ export default function CreatePost({ userId, onPost, userName, userAvatar }) {
       user_name: userName,
       user_avatar: userAvatar
     });
-    await axios.post("/api/posts/create", {
-      user_id: userId,
-      content,
-      image_url: imageUrl,
-      user_name: userName,
-      user_avatar: userAvatar
-    });
-    setContent("");
-    setImageUrl("");
-    setLoading(false);
-    onPost();
-    toast.success('Post created!');
+    try {
+      await axios.post("/api/posts/create", {
+        user_id: userId,
+        content,
+        image_url: imageUrl,
+        user_name: userName,
+        user_avatar: userAvatar
+      });
+      setContent("");
+      setImageUrl("");
+      setLoading(false);
+      onPost();
+      toast.success('Post created!');
+    } catch (error) {
+      setLoading(false);
+      console.error('Error creating post:', error);
+      toast.error('Failed to create post: ' + (error.response?.data?.error || error.message));
+    }
   };
 
   const handleImageUpload = async (e) => {

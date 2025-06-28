@@ -13,10 +13,18 @@ export default function Home() {
 
   const fetchPosts = () => {
     setLoading(true);
-    axios.get("/api/posts/feed").then((res) => {
-      setPosts(res.data);
-      setLoading(false);
-    });
+    console.log('Fetching posts...');
+    axios.get("/api/posts/feed")
+      .then((res) => {
+        console.log('Posts fetched successfully:', res.data);
+        setPosts(res.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching posts:', error);
+        console.error('Error response:', error.response?.data);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
